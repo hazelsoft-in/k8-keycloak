@@ -8,7 +8,7 @@ spec:
   tls:
   - hosts:
      - keycloak.hazelsoft.in
-    secretName: keycloak-ingress-tlsy
+    secretName: keycloak-tls
 
   ingressClassName: nginx
   rules:

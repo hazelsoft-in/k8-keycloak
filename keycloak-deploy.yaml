@@ -33,9 +33,13 @@ spec:
         runAsUser: 1000
       containers:
         - name: keycloak
-          image: quay.io/keycloak/keycloak:21.1.1
-          args: ["start", "--cache-stack=kubernetes", "--spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true"]
+          image: sandeeplv/keycloak:v1
+          args: ["start", "--cache-stack=kubernetes", "--spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true", "--https-certificate-file=/opt/keycloak-ingress-tls-cert.pem", "--https-certificate-key-file=/opt/keycloak-ingress-tls-key.pem"]
           env:
+            - name: KEYCLOAK_ADMIN
+              value: "admin"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "password"
             - name: KC_PROXY
               value: "edge"
             - name: jgroups.dns.query
@@ -47,7 +51,7 @@ spec:
             - name: KC_METRICS_ENABLED
               value: "true"
             - name: KC_HTTP_ENABLED
-              value: "true"
+              value: "false"
             - name: KC_HTTP_RELATIVE_PATH
               value: "/auth"
             - name: KC_HOSTNAME_URL
